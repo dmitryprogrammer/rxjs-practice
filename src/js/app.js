@@ -6,7 +6,9 @@ const eventObserveble = Rx.Observable.fromEvent(btn, "click")
     .scan(val => val + 1, 0)
     .map(val => val ** 2);
 
-eventObserveble.subscribe(val => console.log("val", val));
+eventObserveble.subscribe(val => {
+    btn.innerHTML = `Кнопка ${val}`;
+});
 
 const observeble = Rx.Observable.create(observer => {
     observer.next(2);
@@ -17,5 +19,5 @@ const observeble = Rx.Observable.create(observer => {
 }).map(val => val ** 2);
 
 observeble.subscribe(x => {
-    console.log("got value", x);
+    document.write(x);
 });
