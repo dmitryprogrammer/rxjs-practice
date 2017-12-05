@@ -2,27 +2,34 @@ import Rx from "rxjs";
 
 export class SubjectsPractice {
     constructor() {
+        const btn = document.querySelector("#btn");
         const subject = new Rx.Subject();
 
         //  subscribing
-        subject.subscribe({
-            next: (v) => console.log("observable 1", v)
+        subject.subscribe(data => {
+            switch (data.action) {
+                case "MY_ACTION":
+                    console.log("clicked", data.payload);
+                    break;
+                case "MOUSE_DOWN":
+                    console.log("downed", data.payload);
+                    break;
+            }
         });
 
-        setTimeout(() => {
-            subject.subscribe((v) => console.log("observable 2", v));
-        }, 2000);
-
-        subject.next(1);
-        subject.next("Family");
-        subject.next(2);
-        setInterval(function () {
+        btn.addEventListener("click", () => {
             subject.next({
-                a: 1,
-                b: 2,
-                c: 3,
-                d: 4
+                action: "MY_ACTION",
+                payload: "test my action"
             });
-        }, 5000);
+        });
+
+
+        btn.addEventListener("mouseleave", () => {
+            subject.next({
+                action: "MOUSE_DOWN",
+                payload: "test mouse down"
+            });
+        });
     }
 }
