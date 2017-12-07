@@ -1,7 +1,7 @@
 import Rx from "rxjs";
 
 export class ObservablesPractice {
-    constructor() {
+    run() {
 
         const observer = Rx.Observable.of([1, 2, 3]);
         const observer2 = Rx.Observable.create((observer) => {

@@ -1,49 +1,22 @@
 import Rx from "rxjs";
 
 export class SubjectsPractice {
-    constructor() {
-        const btn = document.querySelector("#btn");
-        const subject = new Rx.Subject();
+    run() {
+        var subject = new Rx.ReplaySubject(5); // buffer 3 values for new subscribers
 
-        //  subscribing
-        subject.subscribe(data => {
-            switch (data.action) {
-                case "MY_ACTION":
-                    console.log("clicked", data.payload);
-                    break;
-                case "MOUSE_DOWN":
-                    console.log("downed", data.payload);
-                    break;
-            }
-        });
-
-        btn.addEventListener("click", () => {
-            subject.next({
-                action: "MY_ACTION",
-                payload: "test my action"
-            });
-        });
-
-
-        btn.addEventListener("mouseleave", () => {
-            subject.next({
-                action: "MOUSE_DOWN",
-                payload: "test mouse down"
-            });
-        });
-
-
-        const source = Rx.Observable.from([1, 2, 3]);
-        const subject2 = new Rx.Subject();
-        const multicasted = source.multicast(subject2);
-
-        // These are, under the hood, `subject.subscribe({...})`:
-        multicasted.subscribe({
+        subject.subscribe({
             next: (v) => console.log('observerA: ' + v)
         });
-        multicasted.subscribe({
+
+        subject.next(1);
+        subject.next(2);
+        subject.next(3);
+        subject.next(4);
+
+        subject.subscribe({
             next: (v) => console.log('observerB: ' + v)
         });
 
+        subject.next(5);
     }
 }
