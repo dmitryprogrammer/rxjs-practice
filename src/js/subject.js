@@ -2,7 +2,7 @@ import Rx from "rxjs";
 
 export class SubjectsPractice {
     run() {
-        var subject = new Rx.ReplaySubject(5); // buffer 3 values for new subscribers
+        const subject = new Rx.ReplaySubject(5); // buffer 3 values for new subscribers
 
         subject.subscribe({
             next: (v) => console.log('observerA: ' + v)
