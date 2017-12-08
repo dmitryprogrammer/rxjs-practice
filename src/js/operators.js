@@ -1,7 +1,7 @@
 import Rx from "rxjs";
 
 export class Operators {
-    constructor() {
+    run() {
         const observable1 = Rx.Observable.interval(1000);
         const observable2 = Rx.Observable.interval(400);
 
